@@ -10,6 +10,10 @@ export default class ProductModel{
     static get(){
         return products;
     }
+    static add(name, desc, price,imageurl){
+      var newProduct = new ProductModel(products.length+1, name,desc,price,imageurl)
+      products.push(newProduct)
+    }
 }
 
 var products = [

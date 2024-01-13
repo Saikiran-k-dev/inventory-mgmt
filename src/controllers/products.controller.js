@@ -10,4 +10,15 @@ export default class ProductController{
         
         
     }
+
+    getNewProduct(req,res){
+        res.render("newProduct")
+    }
+    addnewProduct(req,res){
+        // access data from form.
+        console.log(req.body);
+        ProductModel.add(req.body.name,req.body.desc,req.body.price,req.body.imageUrl)
+        let products = ProductModel.get();
+        res.render('products', {products: products});
+    }
 }

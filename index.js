@@ -6,11 +6,14 @@ import ejsLayout from "express-ejs-layouts"
 const productController = new ProductController()
 
 const app = express();
+app.use(express.urlencoded({extended: true}))
 app.use(ejsLayout)
 app.set("view engine","ejs")
 app.set("views",path.join(path.resolve(),'src','views'))
 
 app.get("/", productController.getProducts)
+app.get("/new",productController.getNewProduct)
+app.post("/",productController.addnewProduct)
 
 
 
