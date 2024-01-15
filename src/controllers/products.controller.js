@@ -12,7 +12,7 @@ export default class ProductController{
     }
 
     getNewProduct(req,res){
-        res.render("newProduct")
+        res.render("newProduct",{errorMessage:null})
     }
     addnewProduct(req,res){
         // access data from form.
@@ -20,5 +20,30 @@ export default class ProductController{
         ProductModel.add(req.body.name,req.body.desc,req.body.price,req.body.imageUrl)
         let products = ProductModel.get();
         res.render('products', {products: products});
+    }
+    getUpdateProductView(req,res){
+        const id = req.params.id
+        const productFound = ProductModel.getById(id)   
+        console.log(productFound)
+        if (productFound){
+            res.render("updateProduct",{product:productFound,errorMessage:null,})
+
+        }
+        else{
+            res.status(401).send("product not found")
+        }
+    }
+    pushUpdateProduct(req,res){
+        ProductModel.update(req.body)
+        console.log(req.body)
+        let products = ProductModel.get();
+        res.render('products', {products: products});
+    }
+    deleteProduct(req,res){
+        const id = req.params.id
+        ProductModel.delete(id)
+        let products = ProductModel.get()
+        res.render('products',{products:products})
+
     }
 }
