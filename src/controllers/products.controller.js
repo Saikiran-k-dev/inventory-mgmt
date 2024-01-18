@@ -6,7 +6,7 @@ export default class ProductController{
         
         let products = ProductModel.get()
         // console.log({products:products})
-        res.render("products",{products:products})
+        res.render("products",{products:products,userEmail:req.session.userEmail})
         
         
     }
@@ -17,9 +17,11 @@ export default class ProductController{
     addnewProduct(req,res){
         // access data from form.
         console.log(req.body);
-        ProductModel.add(req.body.name,req.body.desc,req.body.price,req.body.imageUrl)
+        const imageUrl = 'images/'+req.file.filename
+        console.log(imageUrl)
+        ProductModel.add(req.body.name,req.body.desc,req.body.price,imageUrl)
         let products = ProductModel.get();
-        res.render('products', {products: products});
+        res.render('products', {products: products,userEmail:req.session.userEmail});
     }
     getUpdateProductView(req,res){
         const id = req.params.id
@@ -37,13 +39,13 @@ export default class ProductController{
         ProductModel.update(req.body)
         console.log(req.body)
         let products = ProductModel.get();
-        res.render('products', {products: products});
+        res.render('products', {products: products,userEmail:req.session.userEmail});
     }
     deleteProduct(req,res){
         const id = req.params.id
         ProductModel.delete(id)
         let products = ProductModel.get()
-        res.render('products',{products:products})
+        res.render('products',{products:products,userEmail:req.session.userEmail})
 
     }
 }
